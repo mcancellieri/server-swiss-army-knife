@@ -18,6 +18,15 @@ def getPlugins():
 
 def loadPlugin(plugin):
     return imp.load_module(MainModule, *plugin["info"])
+
+def searchConverter(self, buttonText):
+    print (self.plugins)
+    for p in plugin_loader.getPlugins():
+        plugin = plugin_loader.loadPlugin(p)
+        print (plugin.getName(self))
+        if plugin.getName(self) == buttonText:
+            return plugin
+
     
     
     
