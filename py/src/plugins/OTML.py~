@@ -1,0 +1,55 @@
+from xml.parsers.expat import ExpatError
+
+def getName(self):
+    return "OTML"
+
+def getDescription(self):
+    return "Convert an OTML response to readable text"
+
+def convert(self, stringToConvert):
+    outputText=""
+    text=stringToConvert
+    textJ = json.loads(unicode(str(text), errors='replace'))
+    text = text.replace("\n","")
+    text = text.replace("\\n","")
+    text = text.replace("\\","")
+
+    cache = str(textJ.get('cache'))
+
+    datasources = str(textJ.get('datasources')) 
+    target = str(textJ.get('target'))
+    targetText="TARGET: \n" + str(target) 
+    outputText += targetText
+    params = textJ.get('params')
+
+    parText="\n\nPARAMS: \n"
+    outputText += targetText
+    outputText += str(json.dumps(params, indent=4))
+    cacheText="\n\nCACHE: \n" + str(cache) 
+    outputText += cacheText
+
+    datasources = datasources.replace("\\n","")
+    datasources = datasources.replace("\\","")
+    datasources = minidom.parseString(datasources)
+    datasourcesStr = datasources.toprettyxml(indent='    ')
+    dsText="\n\n DS: \n" 
+    outputText += dsText
+    outputText += str(datasourcesStr.encode('utf-8')) 
+    xml= str(textJ.get('xml').encode('utf-8'))
+    print("xxx" + xml)
+    if xml:
+        xml = xml.replace("\\n","")
+        xml = xml.replace("\\","")
+        print(xml)
+        try:
+            x = minidom.parseString(unicode(xml))
+            xmlStr = x.toprettyxml(indent='    ')
+            xmlText="\n\nXML: \n" 
+            outputText +=  xmlText
+            outputText += str(xmlStr) 
+        except ExpatError:
+	    outputText += xml
+            
+
+    print outputText
+    return outputText
