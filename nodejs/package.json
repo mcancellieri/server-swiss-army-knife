@@ -1,0 +1,13 @@
+{
+  "name": "serverswissarmyknife-nodejs",
+  "description": "a wonderful backend application for a wonderful backend tool",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.x",
+    "walk": "~2.2.1",
+    "connect": "~2.9.0",
+    "htmlencode": "0.0.3",
+    "pretty-data": "~0.40.0",
+    "atob": "~1.1.0"
+  }
+}
